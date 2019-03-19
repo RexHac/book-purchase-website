@@ -1,0 +1,89 @@
+
+<!DOCTYPE HTML> 
+AddType application/x-httpd-php .html
+<html>
+
+<head>
+<title>user register</title>
+</head>
+
+<body>
+<?php
+$nameErr = $emailErr=$isacceptErr="";
+$name = $email = $isaccept = "";
+$isfinish=0;
+$url="reply.php";
+if ($_SERVER["REQUEST_METHOD"] == "post") {
+   if (empty($_POST["u_name"])) {
+     $nameErr = "this field must be filled";
+   } else {
+     $u_name = test_input($_POST["u_name"]);
+     $isfinish+=1;
+   }
+   
+   if (empty($_POST["u_email"])) {
+     $emailErr = "this field must be filled";
+   } else {
+     $u_email = test_input($_POST["u_email"]);
+     $isfinish+=1;
+   }
+   if (empty($_POST["isaccept"])) {
+     $isacceptErr = "this field must be filled";
+   } else {
+     $isaccept = test_input($_POST["isaccept"]);
+     $isfinish+=1;
+   }
+}
+function test_input($data) {
+   $data = trim($data);
+   $data = stripslashes($data);
+   $data = htmlspecialchars($data);
+   return $data;
+}
+
+if($isfinish==3)
+ {
+	echo $isfinish;
+	
+	
+	
+ }
+?>
+
+
+<p><span class="error">* necessary info</span></p>
+<!--<form action="reply.php"method="post">-->
+<form method="post" action= " <?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>">
+<table border="0">
+<tr>    
+	<td width="25">Name:</td>
+	<td width="60" align="center" ><input type="text"name="u_name"size="45"maxlength="45"></td>
+	<td width="150"> <span class="error">*<?php echo $nameErr;?></span> </td>
+	 
+</tr>
+
+<tr>
+	<td>Email:</td>
+	<td align="center" ><input type="text"name="u_email"size="45"maxlength="45"></td>
+	<td width="150"> <span class="error">*<?php echo $emailErr;?></span></td>
+</tr>
+
+
+<tr>
+	<td width="150" align="center"><input type="radio" value="accept" name="isaccept"/>accept</td>
+	<td width="150" align="center"><input type="radio" value="don't accpet" name="isaccept"/>don't accept</td>
+	<td><span class="error">*<?php echo $isacceptErr;?></span></td>
+</tr>
+<tr>
+	<td colspan="2" width="150" align="center"><input type="submit" value="Submit"/></td>
+</tr>
+</table>
+</form>
+
+<?php
+$isfinish=0;
+ 
+?>
+
+</body>
+</html>
